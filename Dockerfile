@@ -4,7 +4,7 @@ COPY lims-middleware-libraries /deps/lims-middleware-libraries
 RUN mvn -B -f /deps/lims-middleware-libraries/pom.xml install
 COPY pom.xml .
 COPY src ./src
-RUN mvn -B -DskipTests clean package
+RUN mvn -B -DskipTests -Dgit.commit.id.skip=true clean package
 
 FROM payara/server-full:5.2022.5
 USER root
