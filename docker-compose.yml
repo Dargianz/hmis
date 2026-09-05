@@ -22,8 +22,6 @@ services:
         condition: service_healthy
     environment:
       SERVICE_URL_APP_8080: /
-    volumes:
-      - hmis-app:/opt/payara/glassfish/domains/domain1
 volumes:
   hmis-db:
   hmis-app:
