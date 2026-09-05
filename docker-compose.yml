@@ -1,0 +1,29 @@
+services:
+  db:
+    image: mariadb:11.8
+    command: ["mariadbd", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
+    environment:
+      MARIADB_DATABASE: coop
+      MARIADB_USER: hmis
+      MARIADB_PASSWORD: hmis-test
+      MARIADB_ROOT_PASSWORD: root-hmis-test
+    volumes:
+      - hmis-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVICE_URL_APP_8080: /
+    volumes:
+      - hmis-app:/opt/payara/glassfish/domains/domain1
+volumes:
+  hmis-db:
+  hmis-app:
