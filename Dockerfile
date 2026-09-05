@@ -10,4 +10,5 @@ FROM payara/server-full:5.2022.5-jdk11
 USER root
 COPY --from=build /src/target/rh-3.0.0.war /opt/payara/deployments/rh.war
 COPY --from=build /root/.m2/repository/com/github/hmislk/lims-middleware-libraries/1.1.4/lims-middleware-libraries-1.1.4.jar /opt/payara/appserver/glassfish/lib/
+COPY docker/post-boot-commands.asadmin /opt/payara/config/post-boot-commands.asadmin
 USER payara
